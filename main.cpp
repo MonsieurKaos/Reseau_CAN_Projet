@@ -1,33 +1,15 @@
-#include "mbed.h"
-#include <iostream>
-#include "CANSmartyCoffre.hpp"
-#include "joystick.hpp"
-#include "mbed.h"
-
 #define COMBO_SIZE 4
 #define NBR_TRY 5
 
-CAN can1 (MBED_CONF_APP_CAN1_RD, MBED_CONF_APP_CAN1_TD);
+#include "mbed.h"
+#include <iostream>
+
+#include "joystick.hpp"
 
 const PinName joystickXPin = A0;
 const PinName joystickYPin = A1;
 
 int main() {
-
-    // Constructeur prend l'objet CAN et l'identifiant du noeud (int) exemple 5 pour empreinte
-    CANSmartyCoffre noeud(can1,2);
-
-    noeud.StartPinging();
-/*
-    if (detection > seuil_min) {
-        noeud.SendDetectionSignal();
-    }
-
-    if (deverouillage_OK){
-        noeud.SendDisarmedSignal();
-    }*/
-
-
   Joystick joystick(joystickXPin, joystickYPin);
   joystick.calibrate();
 
@@ -53,9 +35,6 @@ int main() {
       std::cout << "Combo finished" << std::endl;
       loose = 0;
       comboStreak = 0;
-      noeud.SendDisarmedSignal();
-      printf("envoi signal Disarmed \n");
-
       // trame win
     }
 
@@ -63,8 +42,7 @@ int main() {
       std::cout << "You lose" << std::endl;
       loose = 0;
       comboStreak = 0;
-      noeud.SendDetectionSignal();
-      printf("envoi signal Detection \n");
+      // trame loose
     }
 
     // trame keep alive
