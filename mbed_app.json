@@ -1,0 +1,7 @@
+{
+    "macros": [
+        "MBED_CONF_APP_CAN1_RD=PA_11",
+        "MBED_CONF_APP_CAN1_TD=PA_12",
+        "MBED_CONF_APP_CAN1_HZ=20000"
+    ]
+}
